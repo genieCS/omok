@@ -1,0 +1,10 @@
+.stone-container {
+    display: grid;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 760px;
+    height: 760px;
+    grid-template-columns: repeat(19, 1fr);
+    grid-template-rows: repeat(19, 1fr);
+}
