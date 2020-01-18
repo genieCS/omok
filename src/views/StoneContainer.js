@@ -1,47 +1,38 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import '../styles/StoneContainer.css';
 import StoneSquare from './StoneSquare';
 
-export default class StoneContainer extends Component {
-	constructor(props) {
-		super(props);
+export default function StoneContainer(props) {
+	const { blackIsTurn, onClick } = props;
 
-		this.state = {
-			board: this.initCoordinates(),
-		};
-	}
+	return (
+		<div className={ `stone-container`} >
+			{ initBoard(blackIsTurn, onClick) }
+		</div>
+	);
+}
 
-	initCoordinates() {
-		const board = [];
-		for (let row = 0; row < 19; row++) {
-			board.push([]);
-			board[row].push(new Array(19));
-			for (let col = 0; col< 19; col++) {
-				board[row][col] = { row, col };
-			}
+function initBoard(blackIsTurn, onClick) {
+	const board = initCoordinates();
+
+	return (board.map(row => row.map(col => (
+		<StoneSquare
+			key={ `${ col.row } ${ col.col }` }
+			blackIsTurn={ blackIsTurn }
+			coordinate={ col }
+			onClick={ onClick }
+		 />
+	))));
+}
+
+function initCoordinates() {
+	const board = [];
+	for (let row = 0; row < 19; row++) {
+		board.push([]);
+		board[row].push(new Array(19));
+		for (let col = 0; col< 19; col++) {
+			board[row][col] = { row, col };
 		}
-		return board;
-    }
-
-	initBoard() {
-		const { board } = this.state;
-        const{ blackIsTurn, onClick } = this.props;
-
-		return (board.map(row => row.map(col => (
-            <StoneSquare
-                key={ `${ col.row } ${ col.col }` }
-                blackIsTurn={ blackIsTurn }
-			    coordinate={ col }
-			    onClick={ onClick }
-			 />
-		))));
 	}
-
-	render() {
-		return (
-			<div className={ `stone-container`} >
-				{ this.initBoard() }
-			</div>
-		);
-	}
+	return board;
 }
